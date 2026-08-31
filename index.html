@@ -26,7 +26,7 @@
           --white: #FFFFFF;
           --ink: #17171B;
           --ink2: #4A4A55;
-          --ink3: #8A8A96;
+          --ink3: #6D6D78;
           --rule: #E4DFD4;
           --disp: "Gabarito",system-ui,sans-serif;
           --body: "Source Serif 4",Georgia,serif;
@@ -73,7 +73,7 @@
           html {
             scroll-behavior: auto;
           }
-          * {
+          *, ::details-content {
             transition: none!important;
           }
         }
@@ -145,12 +145,8 @@
           border-radius: 18px;
           scroll-margin-top: 1rem;
           overflow: hidden;
+          overflow: clip;
           transition: transform .14s,box-shadow .14s;
-        }
-
-        .fiche:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 0 -1px var(--k);
         }
 
         .fiche[open] {
@@ -173,7 +169,14 @@
           display: none;
         }
 
+        summary:active {
+          filter: brightness(.96);
+        }
+
         .fiche[open] summary {
+          position: sticky;
+          top: 0;
+          z-index: 2;
           border-bottom: var(--bd) solid var(--ink);
         }
 
@@ -207,11 +210,15 @@
 
         .loc {
           font-family: var(--mono);
-          font-size: .655rem;
+          font-size: .75rem;
           letter-spacing: .015em;
           line-height: 1.5;
           display: block;
           color: var(--kd);
+        }
+
+        .loc b {
+          font-weight: 500;
         }
 
         .caret {
@@ -235,8 +242,8 @@
 
         .lbl {
           font-family: var(--mono);
-          font-size: .6rem;
-          letter-spacing: .15em;
+          font-size: .72rem;
+          letter-spacing: .12em;
           text-transform: uppercase;
           color: var(--ink3);
           margin: 0 0 .5rem;
@@ -284,8 +291,8 @@
           transition: background .13s;
         }
 
-        .srclink:hover {
-          background: var(--k);
+        .srclink:active {
+          filter: brightness(.97);
         }
 
         .srctitle {
@@ -305,9 +312,11 @@
 
         a.inline {
           font-family: var(--mono);
-          font-size: .68rem;
+          font-size: .75rem;
           color: var(--ink);
-          white-space: nowrap;
+          display: inline-block;
+          padding: .3rem .2rem;
+          margin: -.3rem -.2rem;
           text-decoration-thickness: 2px;
           text-underline-offset: 3px;
           text-decoration-color: var(--k);
@@ -370,7 +379,6 @@
         }
 
         .reorder {
-          order: 999;
           align-self: center;
           display: block;
           margin: 2.6rem auto 0;
@@ -387,13 +395,107 @@
           transition: background .13s, transform .13s;
         }
 
-        .reorder:hover {
-          background: #FFC531;
-          transform: translateY(-1px);
-        }
-
         .reorder:active {
           transform: translateY(0);
+        }
+
+        .sommaire {
+          display: flex;
+          flex-wrap: wrap;
+          gap: .45rem;
+          padding: .15rem 0 .3rem;
+        }
+
+        .sommaire a {
+          font-family: var(--mono);
+          font-size: .78rem;
+          font-weight: 500;
+          font-variant-numeric: tabular-nums;
+          line-height: 1;
+          text-decoration: none;
+          color: var(--ink);
+          background: var(--k);
+          border: 2px solid var(--ink);
+          border-radius: 100px;
+          padding: .42rem .68rem;
+          transition: filter .13s, transform .13s;
+        }
+
+        .haut {
+          position: fixed;
+          right: 1rem;
+          bottom: 1rem;
+          z-index: 5;
+          width: 2.9rem;
+          height: 2.9rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--ink);
+          background: var(--white);
+          border: var(--bd) solid var(--ink);
+          border-radius: 50%;
+          cursor: pointer;
+          opacity: 0;
+          pointer-events: none;
+          transform: translateY(6px);
+          transition: opacity .18s, transform .18s, background .13s;
+        }
+
+        .haut.visible {
+          opacity: 1;
+          pointer-events: auto;
+          transform: none;
+        }
+
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          margin: -1px;
+          padding: 0;
+          overflow: hidden;
+          clip-path: inset(50%);
+          white-space: nowrap;
+          border: 0;
+        }
+
+        @media (hover:hover) and (pointer:fine) {
+          .fiche:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 -1px var(--k);
+          }
+          .fiche[open] summary:hover {
+            filter: brightness(.95);
+          }
+          .srclink:hover {
+            background: var(--k);
+          }
+          .reorder:hover {
+            background: #FFC531;
+            transform: translateY(-1px);
+          }
+          .sommaire a:hover {
+            filter: brightness(.94);
+            transform: translateY(-1px);
+          }
+          .haut:hover {
+            background: #FFC531;
+          }
+        }
+
+        @supports (interpolate-size: allow-keywords) {
+          :root {
+            interpolate-size: allow-keywords;
+          }
+          .fiche::details-content {
+            height: 0;
+            overflow: clip;
+            transition: height .28s ease, content-visibility .28s allow-discrete;
+          }
+          .fiche[open]::details-content {
+            height: auto;
+          }
         }
     </style>
 </head>
@@ -408,12 +510,26 @@
 
     <main>
 
+        <nav class="sommaire" id="sommaire" aria-label="Sommaire des fiches">
+            <a class="k1" href="#f1" title="« La charge se retourne contre l'accusé »" aria-label="Fiche 01 — « La charge se retourne contre l'accusé »">01</a>
+            <a class="k2" href="#f2" title="La loi n'est pas rétroactive" aria-label="Fiche 02 — La loi n'est pas rétroactive">02</a>
+            <a class="k3" href="#f3" title="Devoir conjugal « rayé de la carte » en janvier 2026" aria-label="Fiche 03 — Devoir conjugal « rayé de la carte » en janvier 2026">03</a>
+            <a class="k4" href="#f4" title="Le devoir conjugal dans l'article 215 « jusqu'en 1984 »" aria-label="Fiche 04 — Le devoir conjugal dans l'article 215 « jusqu'en 1984 »">04</a>
+            <a class="k5" href="#f5" title="« Toutes les 2 minutes 30 » et les « 210 000 femmes victimes »" aria-label="Fiche 05 — « Toutes les 2 minutes 30 » et les « 210 000 femmes victimes »">05</a>
+            <a class="k6" href="#f6" title="« Sur ces 10 plaintes, 9 seront classées sans suite »" aria-label="Fiche 06 — « Sur ces 10 plaintes, 9 seront classées sans suite »">06</a>
+            <a class="k1" href="#f7" title="« plus de 270 décisions rendues pour un magistrat »" aria-label="Fiche 07 — « plus de 270 décisions rendues pour un magistrat »">07</a>
+            <a class="k2" href="#f8" title="« 16 % ont subi une maltraitance sexuelle dans leur enfance »" aria-label="Fiche 08 — « 16 % ont subi une maltraitance sexuelle dans leur enfance »">08</a>
+            <a class="k3" href="#f9" title="« La moyenne européenne : 56 greffiers, 22 juges, 11 procureurs »" aria-label="Fiche 09 — « La moyenne européenne : 56 greffiers, 22 juges, 11 procureurs »">09</a>
+            <a class="k4" href="#f10" title="« 35 greffiers, 11 juges et 3 procureurs pour 100 000 habitants »" aria-label="Fiche 10 — « 35 greffiers, 11 juges et 3 procureurs pour 100 000 habitants »">10</a>
+            <a class="k5" href="#f11" title="« 76 % des temps partiels, en 2023 »" aria-label="Fiche 11 — « 76 % des temps partiels, en 2023 »">11</a>
+        </nav>
+
         <details class="fiche k1" id="f1" data-p="1" data-s="10">
             <summary>
                 <span class="idx">01</span>
                 <span class="headtxt">
                     <span class="ttl">« La charge se retourne contre l'accusé »</span>
-                    <span class="loc">page&#8239;40&#8201;&#183;&#8201;VIII — Le consentement&#8201;&#183;&#8201;Anne (au public)</span>
+                    <span class="loc"><b>page&#8239;40</b>&#8201;&#183;&#8201;VIII — Le consentement&#8201;&#183;&#8201;Anne (au public)</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -434,7 +550,7 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://www.senat.fr/rap/l24-731/l24-731.html" target="_blank" rel="noopener">
                         <span class="srctitle">Sénat, rapport n° 731 (2024-2025) de Mmes Elsa Schalck et Dominique Vérien, commission des lois, 11 juin 2025</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk prop">
@@ -449,7 +565,7 @@
                 <span class="idx">02</span>
                 <span class="headtxt">
                     <span class="ttl">Ce que la pièce ne dit pas : la loi n'est pas rétroactive</span>
-                    <span class="loc">page&#8239;40&#8201;&#183;&#8201;VIII — Le consentement&#8201;&#183;&#8201;—</span>
+                    <span class="loc"><b>page&#8239;40</b>&#8201;&#183;&#8201;VIII — Le consentement&#8201;&#183;&#8201;—</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -470,7 +586,7 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://www.courdecassation.fr/toutes-les-actualites/2026/07/01/application-dans-le-temps-de-la-loi-de-2025-modifiant-la" target="_blank" rel="noopener">
                         <span class="srctitle">Cour de cassation, chambre criminelle, 1er juillet 2026, n° 26-82.275, publié au Bulletin</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk prop">
@@ -485,7 +601,7 @@
                 <span class="idx">03</span>
                 <span class="headtxt">
                     <span class="ttl">« en janvier 2026 le devoir conjugal est définitivement rayé de la carte »</span>
-                    <span class="loc">page&#8239;34&#8201;&#183;&#8201;VII — Dans le couple II&#8201;&#183;&#8201;Rémi</span>
+                    <span class="loc"><b>page&#8239;34</b>&#8201;&#183;&#8201;VII — Dans le couple II&#8201;&#183;&#8201;Rémi</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -506,7 +622,7 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://www.assemblee-nationale.fr/dyn/17/dossiers/_mettre_fin_au_devoir_conjugual_17e" target="_blank" rel="noopener">
                         <span class="srctitle">Assemblée nationale — dossier législatif « Mettre fin au devoir conjugal », rédaction proposée pour l'article 215 du code civil</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk prop">
@@ -525,7 +641,7 @@
                 <span class="idx">04</span>
                 <span class="headtxt">
                     <span class="ttl">« Le devoir conjugal mentionné dans l'article 215 du Code civil jusqu'en 1984 »</span>
-                    <span class="loc">page&#8239;34&#8201;&#183;&#8201;VII — Dans le couple II&#8201;&#183;&#8201;Rémi</span>
+                    <span class="loc"><b>page&#8239;34</b>&#8201;&#183;&#8201;VII — Dans le couple II&#8201;&#183;&#8201;Rémi</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -546,7 +662,7 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://www.assemblee-nationale.fr/dyn/dyn/contenu/visualisation/1100141/file/EAT-PPL2175findevoirconjugal.pdf" target="_blank" rel="noopener">
                         <span class="srctitle">Assemblée nationale — proposition de loi n° 2175 visant à mettre fin au devoir conjugal, document d'analyse</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk prop">
@@ -561,7 +677,7 @@
                 <span class="idx">05</span>
                 <span class="headtxt">
                     <span class="ttl">« Toutes les 2 minutes 30 » et les « 210 000 femmes victimes »</span>
-                    <span class="loc">page&#8239;13&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Marion</span>
+                    <span class="loc"><b>page&#8239;13</b>&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Marion</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -582,12 +698,12 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://www.interieur.gouv.fr/content/download/139495/1100593/file/SSMSI_VRS2024.pdf" target="_blank" rel="noopener">
                         <span class="srctitle">Enquête « Vécu et ressenti en matière de sécurité » (VRS) 2024 — SSMSI, ministère de l'Intérieur</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk">
                     <p class="lbl">Explication</p>
-                    <div class="prose">Transfert de l'intervalle, calculé sur le périmètre large de toutes les violences sexuelles physiques, vers l'énoncé étroit « viol ou tentative de viol ». <a class="inline" href="https://arretonslesviolences.gouv.fr/sites/default/files/2025-11/Lettre-violences-sexistes-et-sexuelles-en-2024-novembre-2025.pdf" target="_blank" rel="noopener">source de l'erreur&#8239;<span aria-hidden="true">↗</span></a></div>
+                    <div class="prose">Transfert de l'intervalle, calculé sur le périmètre large de toutes les violences sexuelles physiques, vers l'énoncé étroit « viol ou tentative de viol ». <a class="inline" href="https://arretonslesviolences.gouv.fr/sites/default/files/2025-11/Lettre-violences-sexistes-et-sexuelles-en-2024-novembre-2025.pdf" target="_blank" rel="noopener">source de l'erreur<span class="sr-only"> (nouvel onglet)</span>&#8239;<span aria-hidden="true">↗</span></a></div>
                 </div>
                 <div class="blk prop">
                     <p class="lbl">Proposition</p>
@@ -601,7 +717,7 @@
                 <span class="idx">06</span>
                 <span class="headtxt">
                     <span class="ttl">« Sur ces 10 plaintes, 9 seront classées sans suite »</span>
-                    <span class="loc">page&#8239;14&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Valérie</span>
+                    <span class="loc"><b>page&#8239;14</b>&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Valérie</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -622,7 +738,7 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://www.senat.fr/rap/l24-731/l24-7311.pdf" target="_blank" rel="noopener">
                         <span class="srctitle">Sénat, rapport n° 731 (2024-2025), commission des lois, 11 juin 2025 — p. 17-18</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk">
@@ -641,7 +757,7 @@
                 <span class="idx">07</span>
                 <span class="headtxt">
                     <span class="ttl">« plus de 270 décisions rendues pour un magistrat »</span>
-                    <span class="loc">page&#8239;15&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Rémi</span>
+                    <span class="loc"><b>page&#8239;15</b>&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Rémi</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -662,7 +778,7 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://www.budget.gouv.fr/files/uploads/extract/2024/PLF/BG/PGM/166/FR_2024_PLF_BG_PGM_166_PERF.html" target="_blank" rel="noopener">
                         <span class="srctitle">Projet annuel de performances, programme 166 « Justice judiciaire », indicateur 1.4 — PLF 2024</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk prop">
@@ -677,7 +793,7 @@
                 <span class="idx">08</span>
                 <span class="headtxt">
                     <span class="ttl">« 16 % des Françaises et des Français ont subi une maltraitance sexuelle dans leur enfance »</span>
-                    <span class="loc">page&#8239;14&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Rémi</span>
+                    <span class="loc"><b>page&#8239;14</b>&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Rémi</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -698,12 +814,12 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://www.ciivise.fr/sites/ciivise/files/2024-12/Novembre%202023_Synthese%20rapport.pdf" target="_blank" rel="noopener">
                         <span class="srctitle">CIIVISE — synthèse du rapport « On vous croit », novembre 2023</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk">
                     <p class="lbl">Explication</p>
-                    <div class="prose">Un sondage en ligne Harris Interactive pour L'Enfant Bleu (2017, environ 1 000 personnes), relayé ensuite par des tableaux militants, et dont la lecture varie d'une reprise à l'autre. <a class="inline" href="http://harris-interactive.fr/wp-content/uploads/sites/6/2018/10/Rapport-Harris-2017-La_maltraitance_des_enfants-Enfant_bleu.pdf" target="_blank" rel="noopener">source de l'erreur&#8239;<span aria-hidden="true">↗</span></a></div>
+                    <div class="prose">Un sondage en ligne Harris Interactive pour L'Enfant Bleu (2017, environ 1 000 personnes), relayé ensuite par des tableaux militants, et dont la lecture varie d'une reprise à l'autre. <a class="inline" href="http://harris-interactive.fr/wp-content/uploads/sites/6/2018/10/Rapport-Harris-2017-La_maltraitance_des_enfants-Enfant_bleu.pdf" target="_blank" rel="noopener">source de l'erreur<span class="sr-only"> (nouvel onglet)</span>&#8239;<span aria-hidden="true">↗</span></a></div>
                 </div>
                 <div class="blk prop">
                     <p class="lbl">Proposition</p>
@@ -717,7 +833,7 @@
                 <span class="idx">09</span>
                 <span class="headtxt">
                     <span class="ttl">« La moyenne européenne : 56 greffiers, 22 juges, 11 procureurs »</span>
-                    <span class="loc">page&#8239;15&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Marion</span>
+                    <span class="loc"><b>page&#8239;15</b>&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Marion</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -738,7 +854,7 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://rm.coe.int/trends-and-conclusions-2024-cepej-evaluation-report-2022-data-/1680b1fa00" target="_blank" rel="noopener">
                         <span class="srctitle">CEPEJ — 2024 Evaluation Report, Trends and Conclusions (données 2022), Conseil de l'Europe</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk prop">
@@ -753,7 +869,7 @@
                 <span class="idx">10</span>
                 <span class="headtxt">
                     <span class="ttl">« 35 greffiers, 11 juges et 3 procureurs pour 100 000 habitants »</span>
-                    <span class="loc">page&#8239;15&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Rémi</span>
+                    <span class="loc"><b>page&#8239;15</b>&#8201;&#183;&#8201;III — Au défi du réel&#8201;&#183;&#8201;Rémi</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -774,7 +890,7 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://rm.coe.int/france-eu-scoreboard-country-fiches-2022-data/1680b065f4" target="_blank" rel="noopener">
                         <span class="srctitle">CEPEJ — Fiche pays France, cycle 2024 (données 2022), Conseil de l'Europe</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk">
@@ -793,7 +909,7 @@
                 <span class="idx">11</span>
                 <span class="headtxt">
                     <span class="ttl">« 76 % des temps partiels, en 2023 »</span>
-                    <span class="loc">page&#8239;21&#8201;&#183;&#8201;IV — Le code servile&#8201;&#183;&#8201;Procureure Valérie</span>
+                    <span class="loc"><b>page&#8239;21</b>&#8201;&#183;&#8201;IV — Le code servile&#8201;&#183;&#8201;Procureure Valérie</span>
                 </span>
                 <span class="caret" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span>
             </summary>
@@ -814,7 +930,7 @@
                     <p class="lbl">La source</p>
                     <a class="srclink" href="https://www.insee.fr/fr/statistiques/7767077?sommaire=7767424" target="_blank" rel="noopener">
                         <span class="srctitle">Temps partiel — Emploi, chômage, revenus du travail, Insee Références, édition 2024</span>
-                        <span class="srcgo">Consulter <span aria-hidden="true">↗</span></span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span aria-hidden="true">↗</span></span>
                     </a>
                 </div>
                 <div class="blk prop">
@@ -829,31 +945,65 @@
                 data-piece="Réordonner dans l'ordre de la pièce"
                 data-prio="Réordonner par priorité">Réordonner dans l'ordre de la pièce</button>
 
+        <p class="sr-only" id="statut-ordre" role="status" aria-live="polite"></p>
+
     </main>
+
+    <button type="button" class="haut" id="haut" aria-label="Retour en haut de page"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 9.5 8 5.5 12 9.5"/></svg></button>
 
     <script>
         (function () {
+            var principal = document.querySelector('main');
+            var bouton = document.getElementById('reorder');
+            var statut = document.getElementById('statut-ordre');
+            var fiches = [].slice.call(document.querySelectorAll('.fiche'));
+
             function ouvrir(h) {
-                var el = h && h.length > 1 ? document.querySelector(h) : null;
-                if (el && el.classList.contains('fiche')) el.open = true;
+                var el = null;
+                try {
+                    if (h && h.length > 1) el = document.getElementById(decodeURIComponent(h.slice(1)));
+                } catch (e) {}
+                if (el && el.classList.contains('fiche')) {
+                    el.open = true;
+                    el.scrollIntoView();
+                }
             }
             ouvrir(location.hash);
             window.addEventListener('hashchange', function () { ouvrir(location.hash); });
 
-            var bouton = document.getElementById('reorder');
-            var fiches = [].slice.call(document.querySelectorAll('.fiche'));
+            document.getElementById('sommaire').addEventListener('click', function (e) {
+                var lien = e.target.closest('a');
+                if (lien) ouvrir(lien.getAttribute('href'));
+            });
+
+            fiches.forEach(function (f) {
+                f.addEventListener('toggle', function () {
+                    if (!f.open && f.getBoundingClientRect().top < 0) f.scrollIntoView({ block: 'nearest' });
+                });
+            });
+
             bouton.addEventListener('click', function () {
                 var versPiece = bouton.dataset.vers === 'piece';
-                fiches.forEach(function (f) {
-                    var rang = parseInt(versPiece ? f.dataset.s : f.dataset.p, 10);
-                    f.style.order = rang;
-                    f.className = 'fiche k' + ((rang - 1) % 6 + 1);
-                    f.querySelector('.idx').textContent = rang < 10 ? '0' + rang : String(rang);
-                });
+                fiches.slice().sort(function (a, b) {
+                    return versPiece ? a.dataset.s - b.dataset.s : a.dataset.p - b.dataset.p;
+                }).forEach(function (f) { principal.insertBefore(f, bouton); });
                 bouton.dataset.vers = versPiece ? 'prio' : 'piece';
                 bouton.textContent = versPiece ? bouton.dataset.prio : bouton.dataset.piece;
-                document.querySelector('main').scrollIntoView({ block: 'start' });
+                statut.textContent = versPiece
+                    ? 'Fiches réordonnées dans l\'ordre de la pièce.'
+                    : 'Fiches réordonnées par priorité.';
+                var premier = principal.querySelector('.fiche summary');
+                if (premier) premier.focus();
             });
+
+            var haut = document.getElementById('haut');
+            var topbar = document.querySelector('.topbar');
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(function (entrees) {
+                    haut.classList.toggle('visible', !entrees[0].isIntersecting);
+                }, { rootMargin: '50% 0px 0px 0px' }).observe(topbar);
+                haut.addEventListener('click', function () { window.scrollTo({ top: 0 }); });
+            }
         })();
     </script>
 
