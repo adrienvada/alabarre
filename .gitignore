@@ -2,3 +2,7 @@
 ._*
 .Spotlight-V100
 .Trashes
+
+# Fichiers de travail — ne pas publier
+# (contient le texte integral de la piece)
+_source/
