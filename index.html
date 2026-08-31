@@ -341,6 +341,27 @@
           color: var(--ink3);
         }
 
+        .blk.schema {
+          margin-top: 1.3rem;
+        }
+
+        .blk.schema svg {
+          display: block;
+          width: 100%;
+          height: auto;
+          max-width: 380px;
+          margin: 0 auto;
+        }
+
+        .blk.schema figcaption {
+          margin-top: .65rem;
+          font-family: var(--body);
+          font-size: .85rem;
+          font-style: italic;
+          color: var(--ink3);
+          text-align: center;
+        }
+
         .body>.blk:last-child {
           padding-bottom: .15rem;
         }
@@ -397,7 +418,56 @@
                 </div>
                 <div class="blk">
                     <p class="lbl">Remarque</p>
-                    <div class="prose">Le seuil existe et il est bien celui-là, mais il ne fait basculer de la contravention au délit que pour les violences <b>non aggravées</b>. Quatre étages, pas deux : ITT ≤ 8 jours sans circonstance aggravante → contravention de 5<sup>e</sup> classe (art. R. 625-1, 1 500 €, pas de prison) ; ITT ≤ 8 jours <b>avec</b> circonstance aggravante, dont le conjoint → délit (art. 222-13, 3 ans) ; ITT > 8 jours simple → délit (art. 222-11, 3 ans) ; ITT > 8 jours aggravée → art. 222-12, 5 ans. Conséquence pour la scène : <b>dans un couple, le seuil des huit jours ne décide de rien</b> — la qualité de conjoint suffit à faire un délit même sans un seul jour d'ITT.</div>
+                    <div class="prose">Le seuil existe, mais il ne suffit pas à lui seul à distinguer contravention et délit : tout dépend aussi d'une circonstance aggravante, dont la qualité de conjoint. Résultat, schématisé ci-dessous : <b>dans un couple, le seuil des huit jours ne décide de rien</b> — un seul jour d'ITT suffit déjà à faire un délit.</div>
+                </div>
+                <div class="blk schema">
+                    <p class="lbl">Schéma</p>
+                    <svg viewBox="0 0 380 330" role="img" aria-label="Schéma : si l'ITT dépasse huit jours, c'est un délit, article 222-11. Si l'ITT est de huit jours ou moins, tout dépend d'une circonstance aggravante comme la qualité de conjoint : sans aggravante, contravention, article R.625-1 ; avec, délit, article 222-13, même sans un jour d'ITT.">
+                        <defs>
+                            <marker id="f1arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                                <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/>
+                            </marker>
+                        </defs>
+
+                        <line x1="190" y1="52" x2="190" y2="72" stroke="var(--ink)" stroke-width="2" marker-end="url(#f1arrow)"/>
+                        <polyline points="190,122 190,138 100,138 100,150" fill="none" stroke="var(--ink)" stroke-width="2" marker-end="url(#f1arrow)"/>
+                        <polyline points="190,122 190,138 280,138 280,150" fill="none" stroke="var(--ink)" stroke-width="2" marker-end="url(#f1arrow)"/>
+                        <polyline points="100,216 100,230 55,230 55,244" fill="none" stroke="var(--ink)" stroke-width="2" marker-end="url(#f1arrow)"/>
+                        <polyline points="100,216 100,230 150,230 150,244" fill="none" stroke="var(--kd)" stroke-width="2.4" marker-end="url(#f1arrow)"/>
+
+                        <text x="145" y="132" text-anchor="middle" font-family="var(--disp)" font-size="10.5" fill="var(--ink3)">non</text>
+                        <text x="235" y="132" text-anchor="middle" font-family="var(--disp)" font-size="10.5" fill="var(--ink3)">oui</text>
+                        <text x="75" y="224" text-anchor="middle" font-family="var(--disp)" font-size="10.5" fill="var(--ink3)">non</text>
+                        <text x="128" y="224" text-anchor="middle" font-family="var(--disp)" font-weight="700" font-size="10.5" fill="var(--kd)">oui</text>
+
+                        <rect x="30" y="8" width="320" height="44" rx="11" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+                        <text x="190" y="34" text-anchor="middle" font-family="var(--disp)" font-weight="700" font-size="14" fill="var(--ink)">Violences avec ITT</text>
+
+                        <rect x="30" y="74" width="320" height="48" rx="11" fill="var(--paper)" stroke="var(--ink)" stroke-width="2" stroke-dasharray="4,4"/>
+                        <text x="190" y="102" text-anchor="middle" font-family="var(--disp)" font-weight="600" font-size="13.5" fill="var(--ink)">ITT &gt; 8 jours ?</text>
+
+                        <rect x="15" y="152" width="170" height="64" rx="10" fill="var(--paper)" stroke="var(--ink)" stroke-width="2" stroke-dasharray="4,4"/>
+                        <text x="100" y="178" text-anchor="middle" font-family="var(--disp)" font-weight="600" font-size="12.5" fill="var(--ink)">Circonstance</text>
+                        <text x="100" y="194" text-anchor="middle" font-family="var(--disp)" font-weight="600" font-size="12.5" fill="var(--ink)">aggravante ?</text>
+                        <text x="100" y="209" text-anchor="middle" font-family="var(--mono)" font-size="9.5" fill="var(--ink3)">(ex. conjoint)</text>
+
+                        <rect x="195" y="152" width="170" height="64" rx="10" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+                        <text x="280" y="173" text-anchor="middle" font-family="var(--disp)" font-weight="700" font-size="14" fill="var(--ink)">Délit</text>
+                        <text x="280" y="190" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="var(--ink)">art. 222-11</text>
+                        <text x="280" y="205" text-anchor="middle" font-family="var(--disp)" font-size="10.5" fill="var(--ink2)">3 ans / 45 000 €</text>
+
+                        <rect x="10" y="244" width="140" height="60" rx="10" fill="var(--paper)" stroke="var(--ink)" stroke-width="2"/>
+                        <text x="80" y="267" text-anchor="middle" font-family="var(--disp)" font-weight="700" font-size="13" fill="var(--ink)">Contravention</text>
+                        <text x="80" y="284" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="var(--ink)">art. R.625-1</text>
+                        <text x="80" y="298" text-anchor="middle" font-family="var(--disp)" font-size="9.8" fill="var(--ink3)">1 500 €, pas de prison</text>
+
+                        <rect x="165" y="244" width="205" height="76" rx="10" fill="var(--k)" stroke="var(--ink)" stroke-width="2.4"/>
+                        <text x="267" y="267" text-anchor="middle" font-family="var(--disp)" font-weight="700" font-size="14" fill="var(--ink)">Délit</text>
+                        <text x="267" y="284" text-anchor="middle" font-family="var(--mono)" font-size="11.5" fill="var(--ink)">art. 222-13</text>
+                        <text x="267" y="299" text-anchor="middle" font-family="var(--disp)" font-weight="600" font-size="10.5" fill="var(--ink)">même sans ITT</text>
+                        <text x="267" y="313" text-anchor="middle" font-family="var(--disp)" font-size="9.8" fill="var(--kd)">(le conjoint suffit)</text>
+                    </svg>
+                    <figcaption>La qualité de conjoint fait basculer en délit même quand l'ITT ne dépasse pas huit jours.</figcaption>
                 </div>
                 <div class="blk">
                     <p class="lbl">Extrait de la source</p>
