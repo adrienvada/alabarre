@@ -361,6 +361,112 @@
             padding-bottom: .15rem;
         }
 
+        .srclink+.srclink {
+            margin-top: .6rem;
+        }
+
+        .pc {
+            --pc-stop: var(--k);
+            --pc-go: #4F9B72;
+        }
+
+        .pc+.pc {
+            margin-top: 1.7rem;
+        }
+
+        .pc-tt {
+            font-family: var(--disp);
+            font-weight: 700;
+            font-size: .85rem;
+            color: var(--ink);
+            margin: 0 0 .65rem;
+        }
+
+        .pc-alt .pc-tt {
+            color: var(--ink2);
+        }
+
+        .pc-row {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .2rem 0;
+        }
+
+        .pc-track {
+            flex: 0 0 4.6rem;
+            height: .45rem;
+            background: var(--rule);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .pc-bar {
+            display: block;
+            height: 100%;
+            width: var(--w, 0%);
+            border-radius: 100px;
+            background: var(--ink3);
+        }
+
+        .pc-out .pc-bar {
+            background: var(--pc-stop);
+        }
+
+        .pc-go .pc-bar {
+            background: var(--pc-go);
+        }
+
+        .pc-lbl2 {
+            flex: 1 1 auto;
+            font-size: .84rem;
+            line-height: 1.3;
+            color: var(--ink2);
+        }
+
+        .pc-root .pc-lbl2 {
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .pc-val {
+            flex: 0 0 auto;
+            min-width: 2.5rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            font-size: .8rem;
+            font-variant-numeric: tabular-nums;
+            color: var(--ink);
+            text-align: right;
+        }
+
+        .pc-key .pc-bar {
+            background: var(--pc-stop);
+        }
+
+        .pc-key .pc-lbl2 {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .pc-key .pc-val {
+            color: var(--kd);
+        }
+
+        .pc-branch {
+            margin-left: .95rem;
+            padding-left: .7rem;
+            border-left: 2px solid var(--rule);
+        }
+
+        .pc-src {
+            margin-top: .7rem;
+            font-family: var(--mono);
+            font-size: .68rem;
+            line-height: 1.55;
+            color: var(--ink3);
+        }
+
         @media(min-width:42rem) {
             .topbar .wrap {
                 padding-left: 2rem;
@@ -871,7 +977,7 @@
                         classements en matière de violences sexuelles. Le motif ne l'est pas : 49 % de ces classements
                         sont motivés par une « <b>insuffisante caractérisation</b> », c'est-à-dire que les faits ne
                         remplissent pas la définition légale de l'infraction, ce qui est distinct d'une absence de
-                        preuves.</div>
+                        preuves. Une étude de l'Institut des politiques publiques (IPP), fondée sur les mêmes données de la Chancellerie mais sur une période plus longue (2012-2019), aboutit à un ordre de grandeur proche : <b>83 %</b> de classements sans suite pour les violences sexuelles, dont près de la moitié (<b>47 %</b>) pour infraction insuffisamment caractérisée — et permet de détailler l'ensemble du parcours d'une plainte (voir le schéma ci-dessous).</div>
                 </div>
                 <div class="blk">
                     <p class="lbl">Extrait de la source</p>
@@ -883,11 +989,20 @@
                         de telles violences résulte dans 49 % des cas d'une insuffisante caractérisation.</blockquote>
                 </div>
                 <div class="blk">
-                    <p class="lbl">La source</p>
+                    <p class="lbl">Les sources</p>
                     <a class="srclink" href="https://www.senat.fr/rap/l24-731/l24-7311.pdf" target="_blank"
                         rel="noopener">
                         <span class="srctitle">Sénat, rapport n° 731 (2024-2025), commission des lois, 11 juin 2025 — p.
                             17-18</span>
+                        <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span
+                                aria-hidden="true">↗</span></span>
+                    </a>
+                    <a class="srclink"
+                        href="https://www.ipp.eu/wp-content/uploads/2025/05/107_Note_IPP_Violences_aux_femmes-novV2.pdf"
+                        target="_blank" rel="noopener">
+                        <span class="srctitle">Maëlle Stricot, « Le traitement judiciaire des violences sexuelles et
+                            conjugales en France », Note IPP n° 107, Institut des politiques publiques, avril
+                            2024 — figure 1, p. 5</span>
                         <span class="srcgo">Consulter<span class="sr-only"> (nouvel onglet)</span> <span
                                 aria-hidden="true">↗</span></span>
                     </a>
@@ -897,6 +1012,129 @@
                     <div class="prose">« Insuffisamment caractérisée » recouvre deux situations : soit les preuves
                         manquent, soit elles existent mais n'établissent ni violence, ni contrainte, ni menace, ni
                         surprise. La réplique ne retient que la première.</div>
+                </div>
+                <div class="blk">
+                    <p class="lbl">Le parcours d'une plainte</p>
+                    <div class="prose">Sur données Cassiopée (le fichier statistique du ministère de la Justice),
+                        l'IPP reconstitue toutes les étapes que franchit une plainte, du dépôt jusqu'au jugement. Le
+                        classement sans suite n'est pas un bloc unique : il recouvre des motifs très
+                        différents, pas seulement le « manque de preuves ». À titre de comparaison, le même parcours
+                        est détaillé pour les violences conjugales, où le classement s'appuie beaucoup plus souvent
+                        sur une alternative aux poursuites (rappel à la loi, médiation…).</div>
+                    <div class="pc">
+                        <p class="pc-tt">(a) Violences sexuelles</p>
+                        <div class="pc-row pc-root">
+                            <span class="pc-track"><span class="pc-bar" style="--w:100%"></span></span>
+                            <span class="pc-lbl2">Violences sexuelles — plaintes et PV reçus par le parquet</span>
+                            <span class="pc-val">100 %</span>
+                        </div>
+                        <div class="pc-branch">
+                            <div class="pc-row pc-out">
+                                <span class="pc-track"><span class="pc-bar" style="--w:83%"></span></span>
+                                <span class="pc-lbl2">Classement sans suite</span>
+                                <span class="pc-val">83 %</span>
+                            </div>
+                            <div class="pc-branch">
+                                <div class="pc-row">
+                                    <span class="pc-track"><span class="pc-bar" style="--w:72%"></span></span>
+                                    <span class="pc-lbl2">— dont affaire non poursuivable</span>
+                                    <span class="pc-val">72 %</span>
+                                </div>
+                                <div class="pc-branch">
+                                    <div class="pc-row pc-key">
+                                        <span class="pc-track"><span class="pc-bar" style="--w:47%"></span></span>
+                                        <span class="pc-lbl2">Infraction insuffisamment caractérisée</span>
+                                        <span class="pc-val">47 %</span>
+                                    </div>
+                                    <div class="pc-row">
+                                        <span class="pc-track"><span class="pc-bar" style="--w:11%"></span></span>
+                                        <span class="pc-lbl2">Absence d'infraction</span>
+                                        <span class="pc-val">11 %</span>
+                                    </div>
+                                    <div class="pc-row">
+                                        <span class="pc-track"><span class="pc-bar" style="--w:9%"></span></span>
+                                        <span class="pc-lbl2">Défaut d'élucidation (auteur non identifié)</span>
+                                        <span class="pc-val">9 %</span>
+                                    </div>
+                                </div>
+                                <div class="pc-row">
+                                    <span class="pc-track"><span class="pc-bar" style="--w:5%"></span></span>
+                                    <span class="pc-lbl2">— dont inopportunité des poursuites</span>
+                                    <span class="pc-val">5 %</span>
+                                </div>
+                                <div class="pc-row">
+                                    <span class="pc-track"><span class="pc-bar" style="--w:6%"></span></span>
+                                    <span class="pc-lbl2">— dont alternative aux poursuites</span>
+                                    <span class="pc-val">6 %</span>
+                                </div>
+                            </div>
+                            <div class="pc-row pc-go">
+                                <span class="pc-track"><span class="pc-bar" style="--w:17%"></span></span>
+                                <span class="pc-lbl2">Poursuites</span>
+                                <span class="pc-val">17 %</span>
+                            </div>
+                            <div class="pc-branch">
+                                <div class="pc-row">
+                                    <span class="pc-track"><span class="pc-bar" style="--w:15%"></span></span>
+                                    <span class="pc-lbl2">— dont reconnu coupable</span>
+                                    <span class="pc-val">15 %</span>
+                                </div>
+                                <div class="pc-branch">
+                                    <div class="pc-row">
+                                        <span class="pc-track"><span class="pc-bar" style="--w:13%"></span></span>
+                                        <span class="pc-lbl2">— dont condamné à de l'emprisonnement</span>
+                                        <span class="pc-val">13 %</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pc pc-alt">
+                        <p class="pc-tt">(b) Violences conjugales — à titre de comparaison</p>
+                        <div class="pc-row pc-root">
+                            <span class="pc-track"><span class="pc-bar" style="--w:100%"></span></span>
+                            <span class="pc-lbl2">Violences conjugales — plaintes et PV reçus par le parquet</span>
+                            <span class="pc-val">100 %</span>
+                        </div>
+                        <div class="pc-branch">
+                            <div class="pc-row pc-out">
+                                <span class="pc-track"><span class="pc-bar" style="--w:73%"></span></span>
+                                <span class="pc-lbl2">Classement sans suite</span>
+                                <span class="pc-val">73 %</span>
+                            </div>
+                            <div class="pc-branch">
+                                <div class="pc-row">
+                                    <span class="pc-track"><span class="pc-bar" style="--w:30%"></span></span>
+                                    <span class="pc-lbl2">— dont affaire non poursuivable, insuffisamment
+                                        caractérisée</span>
+                                    <span class="pc-val">30 %</span>
+                                </div>
+                                <div class="pc-row">
+                                    <span class="pc-track"><span class="pc-bar" style="--w:29%"></span></span>
+                                    <span class="pc-lbl2">— dont alternative aux poursuites (rappel à la loi,
+                                        médiation…)</span>
+                                    <span class="pc-val">29 %</span>
+                                </div>
+                            </div>
+                            <div class="pc-row pc-go">
+                                <span class="pc-track"><span class="pc-bar" style="--w:27%"></span></span>
+                                <span class="pc-lbl2">Poursuites</span>
+                                <span class="pc-val">27 %</span>
+                            </div>
+                            <div class="pc-branch">
+                                <div class="pc-row">
+                                    <span class="pc-track"><span class="pc-bar" style="--w:26%"></span></span>
+                                    <span class="pc-lbl2">— dont reconnu coupable</span>
+                                    <span class="pc-val">26 %</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="pc-src">Lecture : d'après le fichier Cassiopée (ministère de la Justice), affaires
+                        classées sans suite ou terminées en première instance entre 2012 et 2019, hors non-lieux et
+                        cours d'assises/cours criminelles. Les pourcentages, arrondis indépendamment par l'IPP,
+                        peuvent ne pas s'additionner exactement à chaque étage. Source : IPP, note n° 107, avril
+                        2024, figure 1 (p. 5).</p>
                 </div>
                 <div class="blk prop">
                     <p class="lbl">Proposition</p>
